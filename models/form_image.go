@@ -4,6 +4,7 @@ import (
 	"image"
 
 	"github.com/mbaraa/asu_forms/errors"
+	"github.com/mbaraa/asu_forms/utils"
 	"github.com/ungerik/go-cairo"
 )
 
@@ -11,7 +12,7 @@ import (
 type FormImage struct {
 	srcImage     image.Image
 	workingImage *cairo.Surface
-	bounds       *Bounds
+	bounds       *utils.Bounds
 }
 
 // NewFormImage returns a new FormImage instance
@@ -19,15 +20,15 @@ func NewFormImage(img image.Image) (i *FormImage) {
 	return &FormImage{
 		srcImage:     img,
 		workingImage: cairo.NewSurfaceFromImage(img),
-		bounds: &Bounds{
-			&Point2{0, 0},
-			&Point2{float64(img.Bounds().Max.X), float64(img.Bounds().Max.Y)},
-		},
+		bounds: utils.NewBounds(
+			&utils.Point2{},
+			&utils.Point2{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
+		),
 	}
 }
 
 // GetBounds returns the image's bounds
-func (i *FormImage) GetBounds() *Bounds {
+func (i *FormImage) GetBounds() *utils.Bounds {
 	return i.bounds
 }
 

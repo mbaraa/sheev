@@ -8,6 +8,7 @@ import (
 
 	"github.com/mbaraa/asu_forms/errors"
 	"github.com/mbaraa/asu_forms/models"
+	"github.com/mbaraa/asu_forms/utils"
 )
 
 func hex2rgba(hex string, opacity uint16) color.RGBA64 {
@@ -31,53 +32,53 @@ var (
 
 	ssFields = map[string]models.Field{
 		"StudentName": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 960, Y: 435},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 960, Y: 435},
 			ssRawImage,
 		),
 		"StudentId": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 447, Y: 435},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 447, Y: 435},
 			ssRawImage, true,
 		),
 		"AcademicAdvisor": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 904, Y: 492},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 904, Y: 492},
 			ssRawImage,
 		),
 		"Major": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 971, Y: 547},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 971, Y: 547},
 			ssRawImage, true,
 		),
 		"Date": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 940, Y: 600},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 940, Y: 600},
 			ssRawImage, true,
 		),
 		"Semester": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 435, Y: 600},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 435, Y: 600},
 			ssRawImage, true,
 		),
 		"ActivityGoal": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 940, Y: 655},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 940, Y: 655},
 			ssRawImage,
 		),
 		"TargetedPersonnel": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 803, Y: 1034},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 803, Y: 1034},
 			ssRawImage,
 		),
 		"ActivityTitle": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 946, Y: 1089},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 946, Y: 1089},
 			ssRawImage, true,
 		),
 		"DeservedPoints": models.NewTextField(
-			models.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 972, Y: 1143},
+			utils.NewText("", blueGoogle, 20.5, "Default"),
+			&utils.Point2{X: 972, Y: 1143},
 			ssRawImage, true,
 		),
 	}
