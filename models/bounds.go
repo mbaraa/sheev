@@ -1,4 +1,4 @@
-package utils
+package models
 
 // Point2 represents a point on a 2d plane
 type Point2 struct {

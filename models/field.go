@@ -1,13 +1,11 @@
 package models
 
-import "github.com/mbaraa/asu_forms/utils"
-
 // Field represents a field that can be drawn on an image
 type Field interface {
 	// GetBounds returns field's bounds
-	GetBounds() *utils.Bounds
+	GetBounds() *Bounds
 	// GetPosition returns field's position
-	GetPosition() *utils.Point2
+	GetPosition() *Point2
 	// PlaceField draws the field on its parent image, and returns an occurring error
 	PlaceField() error
 	// CanPlaceField reports whether the field can be placed(w/o overflowing parent) or not

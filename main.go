@@ -1,34 +1,28 @@
 package main
 
 import (
-	"os"
+	"image/color"
 
-	"github.com/mbaraa/asu_forms/data"
+	"github.com/mbaraa/asu_forms/models"
+	"github.com/mbaraa/asu_forms/utils"
+	"github.com/mbaraa/asu_forms/utils/shapes"
+	"github.com/ungerik/go-cairo"
 )
 
 func main() {
-	formsStore := new(data.HardCodeSource)
-	foo, _ := formsStore.Get("SocietyService")
+	c := shapes.NewCircle(2, 1, 1)
+	pg := utils.NewPolygonGenerator(6, c)
+	p := pg.GeneratePolygon()
 
-	foo.ModifyFieldContent("StudentName", "مهاماد براء بشار المصري")
-	foo.ModifyFieldContent("StudentId", "201910560")
-	foo.ModifyFieldContent("AcademicAdvisor", "أ. هديل احمد")
-	foo.ModifyFieldContent("Major", "هندسة البرمجيات")
-	foo.ModifyFieldContent("Date", "08/04/2021")
-	foo.ModifyFieldContent("Semester", "20212")
-	foo.ModifyFieldContent("ActivityGoal", "تعزيز مهارة البرمجة عند طلاب كلية تكنلوجيا المعلومات")
-	foo.ModifyFieldContent("TargetedPersonnel", "طلاب السنة الاولى")
-	foo.ModifyFieldContent("ActivityTitle", "Junior Programming Contest3")
-	foo.ModifyFieldContent("DeservedPoints", "2")
+	sur := cairo.NewSurface(cairo.FORMAT_ARGB32, 200, 200)
+	sur.SetSourceRGBA(1, 1, 1, 1)
+	sur.Paint()
 
-	final, err := foo.MakeForm()
-	if err != nil {
-		panic(err)
-	}
-	fin, _ := os.Create("foobar.png")
-	fin.Write(final)
-	fin.Close()
+	pd := utils.NewPolygonDrawer(p, color.RGBA64{84, 72, 122, 1}, utils.NewDrawingOptions(20, 0, models.Point2{50, 50}), sur)
+	pd.DrawStroke()
 
-	return
+	sur.WriteToPNG("moo.png")
 
+	sur.Finish()
+	sur.Finish()
 }
