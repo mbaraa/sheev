@@ -1,6 +1,6 @@
 package data
 
-import "github.com/mbaraa/asu_forms/models"
+import "github.com/mbaraa/ligma/models"
 
 type FormsGetterRepo interface {
 	// ExistsByName reports whether the Form exists or not, and an occurring error

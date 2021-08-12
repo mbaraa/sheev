@@ -3,8 +3,8 @@ package utils
 import (
 	"math"
 
-	"github.com/mbaraa/asu_forms/models"
-	"github.com/mbaraa/asu_forms/utils/shapes"
+	"github.com/mbaraa/ligma/models"
+	"github.com/mbaraa/ligma/utils/shapes"
 )
 
 // PolygonGenerator generates the inner regular polygon of the given circumferting circle

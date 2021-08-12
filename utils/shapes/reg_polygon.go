@@ -3,7 +3,7 @@ package shapes
 import (
 	"math"
 
-	"github.com/mbaraa/asu_forms/models"
+	"github.com/mbaraa/ligma/models"
 )
 
 // RegPolygon represents a regular polygon
@@ -15,11 +15,12 @@ type RegPolygon struct {
 }
 
 // NewPolygon returns a new Polygon instance
-func NewPolygon(numSides int, sideLength float64) *RegPolygon {
+func NewPolygon(numSides int, sideLength float64, vertices ...models.Point2) *RegPolygon {
 	return &RegPolygon{
 		numSides:       numSides,
 		sideLength:     sideLength,
 		innerSideAngle: calculateInnerSideAngle(numSides),
+		vertices:       vertices,
 	}
 }
 

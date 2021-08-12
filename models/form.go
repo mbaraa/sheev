@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/mbaraa/asu_forms/errors"
+	"github.com/mbaraa/ligma/errors"
 )
 
 // Form represents a form to be filled :)

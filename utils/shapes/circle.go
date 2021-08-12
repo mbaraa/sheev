@@ -3,7 +3,7 @@ package shapes
 import (
 	"math"
 
-	"github.com/mbaraa/asu_forms/models"
+	"github.com/mbaraa/ligma/models"
 )
 
 // Circle represents a circle, used only to generate a regular polygon,

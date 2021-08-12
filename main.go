@@ -3,9 +3,9 @@ package main
 import (
 	"image/color"
 
-	"github.com/mbaraa/asu_forms/models"
-	"github.com/mbaraa/asu_forms/utils"
-	"github.com/mbaraa/asu_forms/utils/shapes"
+	"github.com/mbaraa/ligma/models"
+	"github.com/mbaraa/ligma/utils"
+	"github.com/mbaraa/ligma/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 

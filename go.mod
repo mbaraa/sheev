@@ -1,4 +1,4 @@
-module github.com/mbaraa/asu_forms
+module github.com/mbaraa/ligma
 
 go 1.16
 

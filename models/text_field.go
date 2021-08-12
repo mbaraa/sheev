@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/01walid/goarabic"
-	"github.com/mbaraa/asu_forms/errors"
 	"github.com/mbaraa/dsc_logo_generator/logogen"
+	"github.com/mbaraa/ligma/errors"
 	"github.com/ungerik/go-cairo"
 )
 

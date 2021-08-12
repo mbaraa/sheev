@@ -3,7 +3,7 @@ package models
 import (
 	"image"
 
-	"github.com/mbaraa/asu_forms/errors"
+	"github.com/mbaraa/ligma/errors"
 	"github.com/ungerik/go-cairo"
 )
 

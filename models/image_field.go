@@ -3,16 +3,15 @@ package models
 import (
 	"image"
 
-	"github.com/mbaraa/asu_forms/errors"
-	"github.com/mbaraa/asu_forms/utils"
+	"github.com/mbaraa/ligma/errors"
 )
 
 // ImageField represents an image to be placed in a form
 type ImageField struct {
 	parent   *FormImage
-	bounds   *utils.Bounds
+	bounds   *Bounds
 	img      image.Image
-	position *utils.Point2
+	position *Point2
 }
 
 // NewImageField returns a new ImageField instance
@@ -21,12 +20,12 @@ func NewImageField(name string, img image.Image) *ImageField {
 }
 
 // GetBounds returns image field's bounds
-func (i *ImageField) GetBounds() *utils.Bounds {
+func (i *ImageField) GetBounds() *Bounds {
 	return i.bounds
 }
 
 // GetPosition returns image field's position
-func (i *ImageField) GetPosition() *utils.Point2 {
+func (i *ImageField) GetPosition() *Point2 {
 	return i.position
 }
 
