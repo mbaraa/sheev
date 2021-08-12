@@ -8,6 +8,7 @@ import (
 	"github.com/mbaraa/ligma/errors"
 	"github.com/mbaraa/ligma/models"
 	"github.com/mbaraa/ligma/utils"
+	"github.com/mbaraa/ligma/utils/shapes"
 )
 
 var (
@@ -22,53 +23,64 @@ var (
 	ssFields = map[string]models.Field{
 		"StudentName": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 960, Y: 435},
+			&shapes.Point2{X: 960, Y: 435},
 			ssRawImage,
 		),
 		"StudentId": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 447, Y: 435},
+			&shapes.Point2{X: 447, Y: 435},
 			ssRawImage, true,
 		),
 		"AcademicAdvisor": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 904, Y: 492},
+			&shapes.Point2{X: 904, Y: 492},
 			ssRawImage,
 		),
 		"Major": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 971, Y: 547},
+			&shapes.Point2{X: 971, Y: 547},
 			ssRawImage, true,
 		),
 		"Date": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 940, Y: 600},
+			&shapes.Point2{X: 940, Y: 600},
 			ssRawImage, true,
 		),
 		"Semester": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 435, Y: 600},
+			&shapes.Point2{X: 435, Y: 600},
 			ssRawImage, true,
 		),
 		"ActivityGoal": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 940, Y: 655},
+			&shapes.Point2{X: 940, Y: 655},
 			ssRawImage,
 		),
 		"TargetedPersonnel": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 803, Y: 1034},
+			&shapes.Point2{X: 803, Y: 1034},
 			ssRawImage,
 		),
 		"ActivityTitle": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 946, Y: 1089},
+			&shapes.Point2{X: 946, Y: 1089},
 			ssRawImage, true,
 		),
 		"DeservedPoints": models.NewTextField(
 			utils.NewText("", blueGoogle, 20.5, "Default"),
-			&models.Point2{X: 972, Y: 1143},
+			&shapes.Point2{X: 972, Y: 1143},
 			ssRawImage, true,
+		),
+		"StudentPart": models.NewSelectionField(
+			utils.NewPolygonDrawer(utils.NewRectangleGenerator(shapes.NewBounds(
+				&shapes.Point2{X: 999, Y: 795},
+				&shapes.Point2{X: 1138, Y: 842},
+			)).GenerateRectangle(),
+				color.RGBA64{R: 131, G: 226, B: 36, A: 128},
+				utils.NewDrawingOptions(1, 0, shapes.Point2{}),
+				ssRawImage.GetSurface(),
+			),
+			4, models.VerticalSelection,
 		),
 	}
 

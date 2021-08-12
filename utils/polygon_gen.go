@@ -3,7 +3,6 @@ package utils
 import (
 	"math"
 
-	"github.com/mbaraa/ligma/models"
 	"github.com/mbaraa/ligma/utils/shapes"
 )
 
@@ -53,7 +52,7 @@ func (p *PolygonGenerator) GeneratePolygon() *shapes.RegPolygon {
 // and adding the coordinates of the center.
 // then voila we got the coordinates of the vertices(heads) 🎉🎉
 func (p *PolygonGenerator) calculateVerticesCoordinates() {
-	vertices := make([]models.Point2, p.polygon.GetNumSides())
+	vertices := make([]shapes.Point2, p.polygon.GetNumSides())
 	cumAngle := p.polygon.GetInnerSideAngle()
 	var x, y, cX, cY float64
 
@@ -61,7 +60,7 @@ func (p *PolygonGenerator) calculateVerticesCoordinates() {
 		cX = p.cirCircle.GetPosition().X
 		cY = p.cirCircle.GetPosition().Y
 
-		vertices[pi] = models.Point2{
+		vertices[pi] = shapes.Point2{
 			X: cX + getXCartesian(p.cirCircle.GetRadius(), cumAngle),
 			Y: cY + getYCartesian(p.cirCircle.GetRadius(), cumAngle),
 		}

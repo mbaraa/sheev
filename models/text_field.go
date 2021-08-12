@@ -6,14 +6,15 @@ import (
 	"github.com/01walid/goarabic"
 	"github.com/mbaraa/dsc_logo_generator/logogen"
 	"github.com/mbaraa/ligma/errors"
+	"github.com/mbaraa/ligma/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 
 // TextField represents a text to be placed in a form
 type TextField struct {
 	parent   *FormImage
-	bounds   *Bounds
-	position *Point2
+	bounds   *shapes.Bounds
+	position *shapes.Point2
 	text     *logogen.Text
 	fontName string
 	isRTL    bool
@@ -21,7 +22,7 @@ type TextField struct {
 
 // NewTextField returns a new TextField instance
 // the isRTL optional flag is used to indicate whether a non RTL text is placed in an RTL context
-func NewTextField(text *logogen.Text, position *Point2, parent *FormImage, isRTL ...bool) *TextField {
+func NewTextField(text *logogen.Text, position *shapes.Point2, parent *FormImage, isRTL ...bool) *TextField {
 	var isRTL2 bool
 	if isRTL != nil {
 		isRTL2 = isRTL[0]
@@ -31,21 +32,21 @@ func NewTextField(text *logogen.Text, position *Point2, parent *FormImage, isRTL
 		text:     text,
 		position: position,
 		parent:   parent,
-		bounds: NewBounds(
-			&Point2{},
-			&Point2{X: text.GetXLength(), Y: text.GetFontSize() / 2},
+		bounds: shapes.NewBounds(
+			&shapes.Point2{},
+			&shapes.Point2{X: text.GetXLength(), Y: text.GetFontSize() / 2},
 		),
 		isRTL: isRTL2,
 	}
 }
 
 // GetBounds returns text field's bounds
-func (f *TextField) GetBounds() *Bounds {
+func (f *TextField) GetBounds() *shapes.Bounds {
 	return f.bounds
 }
 
 // GetPosition returns text field's position
-func (f *TextField) GetPosition() *Point2 {
+func (f *TextField) GetPosition() *shapes.Point2 {
 	return f.position
 }
 
@@ -121,8 +122,8 @@ func (f *TextField) CanPlaceField() bool {
 // SetContent sets a new value for the text
 func (f *TextField) SetContent(txt interface{}) {
 	f.text.SetContent(txt.(string))
-	f.bounds = NewBounds(
-		&Point2{},
-		&Point2{X: f.text.GetXLength(), Y: f.text.GetFontSize() / 2},
+	f.bounds = shapes.NewBounds(
+		&shapes.Point2{},
+		&shapes.Point2{X: f.text.GetXLength(), Y: f.text.GetFontSize() / 2},
 	)
 }

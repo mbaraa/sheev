@@ -3,7 +3,6 @@ package utils
 import (
 	"image/color"
 
-	"github.com/mbaraa/ligma/models"
 	"github.com/mbaraa/ligma/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
@@ -12,11 +11,11 @@ import (
 type DrawingOptions struct {
 	Scale      float64
 	Rotation   float64
-	StartPoint models.Point2
+	StartPoint shapes.Point2
 }
 
 // NewDrawingOptions returns DrawingOptions
-func NewDrawingOptions(scale, rotation float64, startingPoint models.Point2) *DrawingOptions {
+func NewDrawingOptions(scale, rotation float64, startingPoint shapes.Point2) *DrawingOptions {
 	return &DrawingOptions{
 		Scale:      scale,
 		Rotation:   rotation,
@@ -42,6 +41,10 @@ func NewPolygonDrawer(polygon shapes.Polygon, polygonColor color.Color,
 		opts:    drawingOptions,
 		surface: surface,
 	}
+}
+
+func (d *PolygonDrawer) GetPolygon() shapes.Polygon {
+	return d.polygon
 }
 
 // DrawStroke draws the polygon on the given surface with stroke
@@ -94,5 +97,5 @@ func normalizeRGBA(rgba color.Color) (float64, float64, float64, float64) {
 	return float64(r) / 255.0,
 		float64(g) / 255.0,
 		float64(b) / 255.0,
-		float64(a)
+		float64(a) / 255.0
 }

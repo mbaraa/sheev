@@ -4,6 +4,7 @@ import (
 	"image"
 
 	"github.com/mbaraa/ligma/errors"
+	"github.com/mbaraa/ligma/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 
@@ -11,7 +12,7 @@ import (
 type FormImage struct {
 	srcImage     image.Image
 	workingImage *cairo.Surface
-	bounds       *Bounds
+	bounds       *shapes.Bounds
 }
 
 // NewFormImage returns a new FormImage instance
@@ -19,15 +20,15 @@ func NewFormImage(img image.Image) (i *FormImage) {
 	return &FormImage{
 		srcImage:     img,
 		workingImage: cairo.NewSurfaceFromImage(img),
-		bounds: NewBounds(
-			&Point2{},
-			&Point2{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
+		bounds: shapes.NewBounds(
+			&shapes.Point2{},
+			&shapes.Point2{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
 		),
 	}
 }
 
 // GetBounds returns the image's bounds
-func (i *FormImage) GetBounds() *Bounds {
+func (i *FormImage) GetBounds() *shapes.Bounds {
 	return i.bounds
 }
 

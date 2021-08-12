@@ -1,17 +1,13 @@
 package shapes
 
-import (
-	"github.com/mbaraa/ligma/models"
-)
-
 // IrRegPolygon represents an irregular polygon
 type IrRegPolygon struct {
 	numSides int
-	vertices []models.Point2
+	vertices []Point2
 }
 
 // NewIrRegPolygon returns a new IrRegPolygon instance
-func NewIrRegPolygon(numSides int, vertices ...models.Point2) *IrRegPolygon {
+func NewIrRegPolygon(numSides int, vertices ...Point2) *IrRegPolygon {
 	if numSides != len(vertices) {
 		return nil
 	}
@@ -28,11 +24,11 @@ func (p *IrRegPolygon) GetNumSides() int {
 }
 
 // GetVertices returns a slice of utils.Point2 that represents the vertices of the polygon
-func (p *IrRegPolygon) GetVertices() []models.Point2 {
+func (p *IrRegPolygon) GetVertices() []Point2 {
 	return p.vertices
 }
 
 // SetVertices it's written on the box :)
-func (p *IrRegPolygon) SetVertices(v []models.Point2) {
+func (p *IrRegPolygon) SetVertices(v []Point2) {
 	p.vertices = v
 }

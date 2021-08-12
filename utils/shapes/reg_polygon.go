@@ -2,8 +2,6 @@ package shapes
 
 import (
 	"math"
-
-	"github.com/mbaraa/ligma/models"
 )
 
 // RegPolygon represents a regular polygon
@@ -11,11 +9,11 @@ type RegPolygon struct {
 	numSides       int
 	sideLength     float64
 	innerSideAngle float64
-	vertices       []models.Point2
+	vertices       []Point2
 }
 
 // NewPolygon returns a new Polygon instance
-func NewPolygon(numSides int, sideLength float64, vertices ...models.Point2) *RegPolygon {
+func NewPolygon(numSides int, sideLength float64, vertices ...Point2) *RegPolygon {
 	return &RegPolygon{
 		numSides:       numSides,
 		sideLength:     sideLength,
@@ -39,12 +37,12 @@ func (p *RegPolygon) GetNumSides() int {
 }
 
 // GetVertices returns a slice of utils.Point2 that represents the vertices of the polygon
-func (p *RegPolygon) GetVertices() []models.Point2 {
+func (p *RegPolygon) GetVertices() []Point2 {
 	return p.vertices
 }
 
 // SetVertices it's written on the box :)
-func (p *RegPolygon) SetVertices(v []models.Point2) {
+func (p *RegPolygon) SetVertices(v []Point2) {
 	p.vertices = v
 }
 

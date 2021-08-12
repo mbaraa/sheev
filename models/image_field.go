@@ -4,14 +4,15 @@ import (
 	"image"
 
 	"github.com/mbaraa/ligma/errors"
+	"github.com/mbaraa/ligma/utils/shapes"
 )
 
 // ImageField represents an image to be placed in a form
 type ImageField struct {
 	parent   *FormImage
-	bounds   *Bounds
+	bounds   *shapes.Bounds
 	img      image.Image
-	position *Point2
+	position *shapes.Point2
 }
 
 // NewImageField returns a new ImageField instance
@@ -20,12 +21,12 @@ func NewImageField(name string, img image.Image) *ImageField {
 }
 
 // GetBounds returns image field's bounds
-func (i *ImageField) GetBounds() *Bounds {
+func (i *ImageField) GetBounds() *shapes.Bounds {
 	return i.bounds
 }
 
 // GetPosition returns image field's position
-func (i *ImageField) GetPosition() *Point2 {
+func (i *ImageField) GetPosition() *shapes.Point2 {
 	return i.position
 }
 
