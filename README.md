@@ -1,8 +1,10 @@
-# ASU Forms
+# Ligma 
 
-this thing generates forms, much wow!
+**What's `Ligma` you might ask?**\
+Ligma foooorms 😂😂😂,\
+alright sorry 😇 this thing generates forms, much wow!
 
-[![GoDoc](https://godoc.org/github.com/mbaraa/asu_forms?status.png)](https://godoc.org/github.com/mbaraa/asu_forms) [![Go Report Card](https://goreportcard.com/badge/github.com/mbaraa/asu_forms)](https://goreportcard.com/report/github.com/mbaraa/asu_forms)
+[![GoDoc](https://godoc.org/github.com/mbaraa/ligma?status.png)](https://godoc.org/github.com/mbaraa/ligma) [![Go Report Card](https://goreportcard.com/badge/github.com/mbaraa/ligma)](https://goreportcard.com/report/github.com/mbaraa/ligma) ![GitHub](https://img.shields.io/github/license/mbaraa/ligma)
 
 ## dependencies:
 - **Backend**
