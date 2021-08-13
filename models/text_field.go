@@ -52,7 +52,7 @@ func (f *TextField) GetPosition() *shapes.Point2 {
 
 // PlaceField draws the text on its parent image, and returns an occurring error
 func (f *TextField) PlaceField() error {
-	if !f.CanPlaceField() {
+	if !f.canPlaceField() {
 		return errors.ErrFieldOverflowsParent
 	}
 	f.drawText()
@@ -113,10 +113,15 @@ func (f *TextField) isArabic() bool {
 	return false
 }
 
-// CanPlaceField reports whether the text can be placed(w/o overflowing parent) or not
-func (f *TextField) CanPlaceField() bool {
+// canPlaceField reports whether the text can be placed(w/o overflowing parent) or not
+func (f *TextField) canPlaceField() bool {
 	return f.bounds.GetMax().X <= f.parent.GetBounds().GetMax().X &&
 		f.bounds.GetMax().Y <= f.parent.GetBounds().GetMax().Y
+}
+
+// GetContent returns the inner text of the current text field
+func (f *TextField) GetContent() interface{} {
+	return f.text.GetContent() // string
 }
 
 // SetContent sets a new value for the text

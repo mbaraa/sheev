@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/mbaraa/ligma/errors"
 	"github.com/mbaraa/ligma/utils"
 	"github.com/mbaraa/ligma/utils/shapes"
 )
@@ -12,9 +11,9 @@ type SelectionField struct {
 	bounds           *shapes.Bounds
 	originalVertices []shapes.Point2
 
-	numSelections int
-	selection     int
-	orientation   Orientation
+	selections  map[string]int
+	selection   string
+	orientation Orientation
 }
 
 // Orientation represents selection field's orientation
@@ -27,14 +26,13 @@ const (
 )
 
 // NewSelectionField returns a new SelectionField instance
-func NewSelectionField(polygonDrawer *utils.PolygonDrawer, numSelection int, orientation Orientation) *SelectionField {
+func NewSelectionField(polygonDrawer *utils.PolygonDrawer, selections map[string]int, orientation Orientation) *SelectionField {
 
 	return (&SelectionField{
 		drawer:           polygonDrawer,
 		orientation:      orientation,
-		numSelections:    numSelection,
+		selections:       selections,
 		originalVertices: polygonDrawer.GetPolygon().GetVertices(),
-		selection:        1,
 	}).initBounds()
 }
 
@@ -90,23 +88,27 @@ func (s *SelectionField) fixPositions() {
 
 		switch s.orientation {
 		case VerticalSelection:
-			if s.selection > 1 {
-				newVertices[index].Y += float64(s.selection-1) * (s.bounds.GetMax().Y - s.bounds.GetMin().Y)
+			if s.selections[s.selection] > 1 {
+				newVertices[index].Y += float64(s.selections[s.selection]-1) * (s.bounds.GetMax().Y - s.bounds.GetMin().Y)
 			}
 		case HorizontalSelection:
-			newVertices[index].X += float64(s.selection) * (s.bounds.GetMax().X - s.bounds.GetMin().X)
+			if s.selections[s.selection] > 1 {
+				newVertices[index].X += float64(s.selections[s.selection]-1) * (s.bounds.GetMax().X - s.bounds.GetMin().X)
+			}
 		}
 	}
 
 	s.drawer.GetPolygon().SetVertices(newVertices)
 }
 
-// CanPlaceField reports whether the selection box can be placed(w/o overflowing parent) or not
-func (s *SelectionField) CanPlaceField() bool {
-	panic(errors.ErrNotImplemented)
+// GetContent returns the content of the current field
+func (s *SelectionField) GetContent() interface{} {
+	return s.selections // map[string]int
 }
 
-// SetContent sets the position of the selection box
+// SetContent sets the position of the selection box depending on the box name
 func (s *SelectionField) SetContent(selection interface{}) {
-	s.selection = selection.(int) % (s.numSelections + 1)
+	if _, selectionExisits := s.selections[selection.(string)]; selectionExisits {
+		s.selection = selection.(string)
+	}
 }

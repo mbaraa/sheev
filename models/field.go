@@ -12,8 +12,8 @@ type Field interface {
 	GetPosition() *shapes.Point2
 	// PlaceField draws the field on its parent image, and returns an occurring error
 	PlaceField() error
-	// CanPlaceField reports whether the field can be placed(w/o overflowing parent) or not
-	CanPlaceField() bool
+	// GetContent returns the content of the current field
+	GetContent() interface{}
 	// SetContent sets a new value for the fields content
 	SetContent(value interface{})
 }

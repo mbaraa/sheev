@@ -25,6 +25,11 @@ func (f *Form) GetName() string {
 	return f.name
 }
 
+// GetFields returns fields, lol
+func (f *Form) GetFields() map[string]Field {
+	return f.fields
+}
+
 // MakeForm generates the form with the given fields' data and returns an occurring error
 func (f *Form) MakeForm() ([]byte, error) {
 	for _, form := range f.fields {
@@ -58,5 +63,5 @@ func (f *Form) ModifyFieldContent(name string, newContent interface{}) error {
 
 // RemoveField removes the first encountered field with the given name
 func (f *Form) RemoveField(name string) {
-	panic(errors.ErrNotImplemented)
+	delete(f.fields, name)
 }

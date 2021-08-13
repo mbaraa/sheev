@@ -80,7 +80,13 @@ var (
 				utils.NewDrawingOptions(1, 0, shapes.Point2{}),
 				ssRawImage.GetSurface(),
 			),
-			4, models.VerticalSelection,
+			map[string]int{
+				"مشارك":  1,
+				"متسابق": 2,
+				"منظم":   3,
+				"متطوع":  4,
+			},
+			models.VerticalSelection,
 		),
 	}
 
