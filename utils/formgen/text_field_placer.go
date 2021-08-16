@@ -1,4 +1,4 @@
-package models
+package formgen
 
 import (
 	"os"
@@ -10,8 +10,8 @@ import (
 	"github.com/ungerik/go-cairo"
 )
 
-// TextField represents a text to be placed in a form
-type TextField struct {
+// TextFieldPlacer represents a text to be placed in a form
+type TextFieldPlacer struct {
 	parent   *FormImage
 	bounds   *shapes.Bounds
 	position *shapes.Point2
@@ -20,15 +20,15 @@ type TextField struct {
 	isRTL    bool
 }
 
-// NewTextField returns a new TextField instance
+// NewTextFieldPlacer returns a new TextFieldPlacer instance
 // the isRTL optional flag is used to indicate whether a non RTL text is placed in an RTL context
-func NewTextField(text *logogen.Text, position *shapes.Point2, parent *FormImage, isRTL ...bool) *TextField {
+func NewTextFieldPlacer(text *logogen.Text, position *shapes.Point2, parent *FormImage, isRTL ...bool) *TextFieldPlacer {
 	var isRTL2 bool
 	if isRTL != nil {
 		isRTL2 = isRTL[0]
 	}
 
-	return &TextField{
+	return &TextFieldPlacer{
 		text:     text,
 		position: position,
 		parent:   parent,
@@ -41,17 +41,17 @@ func NewTextField(text *logogen.Text, position *shapes.Point2, parent *FormImage
 }
 
 // GetBounds returns text field's bounds
-func (f *TextField) GetBounds() *shapes.Bounds {
+func (f *TextFieldPlacer) GetBounds() *shapes.Bounds {
 	return f.bounds
 }
 
 // GetPosition returns text field's position
-func (f *TextField) GetPosition() *shapes.Point2 {
+func (f *TextFieldPlacer) GetPosition() *shapes.Point2 {
 	return f.position
 }
 
 // PlaceField draws the text on its parent image, and returns an occurring error
-func (f *TextField) PlaceField() error {
+func (f *TextFieldPlacer) PlaceField() error {
 	if !f.canPlaceField() {
 		return errors.ErrFieldOverflowsParent
 	}
@@ -61,10 +61,11 @@ func (f *TextField) PlaceField() error {
 }
 
 // drawText draws the
-func (f *TextField) drawText() {
+func (f *TextFieldPlacer) drawText() {
 	if f.isArabic() {
 		f.makeArabic()
-	} else if f.isRTL {
+	}
+	if f.isRTL {
 		f.makeRTL()
 	}
 
@@ -80,30 +81,30 @@ func (f *TextField) drawText() {
 }
 
 // makeArabic sets appropriate settings for the text to be Arabic
-func (f *TextField) makeArabic() {
+func (f *TextFieldPlacer) makeArabic() {
 	f.text.SetContent(goarabic.Reverse(goarabic.ToGlyph(f.text.GetContent())))
 
 	f.shiftForRTL()
 	f.changeFont("Geeza Pro") // "Gezza Pro" is the most appropriate Arabic font I found :]
 }
 
-func (f *TextField) makeRTL() {
+func (f *TextFieldPlacer) makeRTL() {
 	f.shiftForRTL()
 	f.changeFont("Default") // "Default.ttf" has all ASCII chars + Arabic
 }
 
-func (f *TextField) shiftForRTL() {
+func (f *TextFieldPlacer) shiftForRTL() {
 	f.position.X -= f.text.GetXLength() // RTL goes brr
 }
 
-func (f *TextField) changeFont(fontName string) {
+func (f *TextFieldPlacer) changeFont(fontName string) {
 	f.fontName = fontName
 	geezaFont, _ := os.ReadFile("./res/fonts/" + fontName + ".ttf")
 	f.text.SetFontFamily(geezaFont)
 }
 
 // isArabic reports whether the text string is Arabic or not
-func (f *TextField) isArabic() bool {
+func (f *TextFieldPlacer) isArabic() bool {
 	for _, chr := range f.text.GetContent() {
 		if chr >= 0x600 && chr <= 0x6FF {
 			return true
@@ -114,21 +115,29 @@ func (f *TextField) isArabic() bool {
 }
 
 // canPlaceField reports whether the text can be placed(w/o overflowing parent) or not
-func (f *TextField) canPlaceField() bool {
+func (f *TextFieldPlacer) canPlaceField() bool {
 	return f.bounds.GetMax().X <= f.parent.GetBounds().GetMax().X &&
 		f.bounds.GetMax().Y <= f.parent.GetBounds().GetMax().Y
 }
 
 // GetContent returns the inner text of the current text field
-func (f *TextField) GetContent() interface{} {
+func (f *TextFieldPlacer) GetContent() interface{} {
 	return f.text.GetContent() // string
 }
 
 // SetContent sets a new value for the text
-func (f *TextField) SetContent(txt interface{}) {
+func (f *TextFieldPlacer) SetContent(txt interface{}) {
 	f.text.SetContent(txt.(string))
 	f.bounds = shapes.NewBounds(
 		&shapes.Point2{},
 		&shapes.Point2{X: f.text.GetXLength(), Y: f.text.GetFontSize() / 2},
 	)
+}
+
+// SetPartOfContent sets the value of a character in the string
+func (f *TextFieldPlacer) SetPartOfContent(charValue, place interface{}) {
+	modifiedStr := []rune(f.text.GetContent())
+	modifiedStr[place.(int)%len(modifiedStr)] = charValue.(rune)
+
+	f.SetContent(string(modifiedStr))
 }

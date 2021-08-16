@@ -1,12 +1,12 @@
-package models
+package formgen
 
 import (
 	"github.com/mbaraa/ligma/utils"
 	"github.com/mbaraa/ligma/utils/shapes"
 )
 
-// SelectionField represents a selection(highlighter) field ho ho ho to be placed in a form
-type SelectionField struct {
+// SelectionFieldPlacer represents a selection(highlighter) field ho ho ho to be placed in a form
+type SelectionFieldPlacer struct {
 	drawer           *utils.PolygonDrawer
 	bounds           *shapes.Bounds
 	originalVertices []shapes.Point2
@@ -25,10 +25,10 @@ const (
 	HorizontalSelection
 )
 
-// NewSelectionField returns a new SelectionField instance
-func NewSelectionField(polygonDrawer *utils.PolygonDrawer, selections map[string]int, orientation Orientation) *SelectionField {
+// NewSelectionFieldPlacer returns a new SelectionFieldPlacer instance
+func NewSelectionFieldPlacer(polygonDrawer *utils.PolygonDrawer, selections map[string]int, orientation Orientation) *SelectionFieldPlacer {
 
-	return (&SelectionField{
+	return (&SelectionFieldPlacer{
 		drawer:           polygonDrawer,
 		orientation:      orientation,
 		selections:       selections,
@@ -52,7 +52,7 @@ func getMaxPolygonPoint(polygon shapes.Polygon) *shapes.Point2 {
 	return &shapes.Point2{X: xMax, Y: yMax}
 }
 
-func (s *SelectionField) initBounds() *SelectionField {
+func (s *SelectionFieldPlacer) initBounds() *SelectionFieldPlacer {
 	s.bounds = shapes.NewBounds(
 		&s.drawer.GetPolygon().GetVertices()[0],
 		getMaxPolygonPoint(s.drawer.GetPolygon()),
@@ -62,37 +62,35 @@ func (s *SelectionField) initBounds() *SelectionField {
 }
 
 // GetBounds returns image field's bounds
-func (s *SelectionField) GetBounds() *shapes.Bounds {
+func (s *SelectionFieldPlacer) GetBounds() *shapes.Bounds {
 	return s.bounds
 }
 
 // GetPosition returns image field's position
-func (s *SelectionField) GetPosition() *shapes.Point2 {
+func (s *SelectionFieldPlacer) GetPosition() *shapes.Point2 {
 	return nil
 }
 
 // PlaceField draws the selection box on its parent image, and returns an occurring error
-func (s *SelectionField) PlaceField() error {
+func (s *SelectionFieldPlacer) PlaceField() error {
 	s.fixPositions()
 	s.drawer.DrawFill()
 
 	return nil
 }
 
-func (s *SelectionField) fixPositions() {
+func (s *SelectionFieldPlacer) fixPositions() {
 	newVertices := make([]shapes.Point2, s.drawer.GetPolygon().GetNumSides())
 	s.drawer.GetPolygon().SetVertices(s.originalVertices)
 
-	for index, vertex := range s.drawer.GetPolygon().GetVertices() {
-		newVertices[index] = vertex
+	if s.selections[s.selection] > 1 {
+		for index, vertex := range s.drawer.GetPolygon().GetVertices() {
+			newVertices[index] = vertex
 
-		switch s.orientation {
-		case VerticalSelection:
-			if s.selections[s.selection] > 1 {
+			switch s.orientation {
+			case VerticalSelection:
 				newVertices[index].Y += float64(s.selections[s.selection]-1) * (s.bounds.GetMax().Y - s.bounds.GetMin().Y)
-			}
-		case HorizontalSelection:
-			if s.selections[s.selection] > 1 {
+			case HorizontalSelection:
 				newVertices[index].X += float64(s.selections[s.selection]-1) * (s.bounds.GetMax().X - s.bounds.GetMin().X)
 			}
 		}
@@ -102,13 +100,20 @@ func (s *SelectionField) fixPositions() {
 }
 
 // GetContent returns the content of the current field
-func (s *SelectionField) GetContent() interface{} {
+func (s *SelectionFieldPlacer) GetContent() interface{} {
 	return s.selections // map[string]int
 }
 
-// SetContent sets the position of the selection box depending on the box name
-func (s *SelectionField) SetContent(selection interface{}) {
-	if _, selectionExisits := s.selections[selection.(string)]; selectionExisits {
-		s.selection = selection.(string)
+// SetContent sets the selections lol
+func (s *SelectionFieldPlacer) SetContent(selections interface{}) {
+	s.selections = selections.(map[string]int)
+}
+
+// SetPartOfContent sets the position of the selection box depending on the box name
+// ok I know I really fucked up in here that the first parameter is ignored,
+// but it works best this way SetPartOfContent("selection", selectionName)
+func (s *SelectionFieldPlacer) SetPartOfContent(selection, selectionValue interface{}) {
+	if _, selectionExists := s.selections[selectionValue.(string)]; selectionExists {
+		s.selection = selectionValue.(string)
 	}
 }

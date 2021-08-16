@@ -1,7 +1,10 @@
-package models
+package formgen
 
 import (
+	"bytes"
+	"encoding/base64"
 	"image"
+	"image/png"
 
 	"github.com/mbaraa/ligma/errors"
 	"github.com/mbaraa/ligma/utils/shapes"
@@ -41,4 +44,16 @@ func (i *FormImage) ResetChanges() {
 // used in field drawing
 func (i *FormImage) GetSurface() *cairo.Surface {
 	return i.workingImage
+}
+
+// GetImage returns the image in base64
+func (i *FormImage) GetImage() string {
+	img := bytes.NewBuffer([]byte(""))
+	err := png.Encode(img, i.srcImage)
+
+	if err != nil {
+		return ""
+	}
+
+	return base64.StdEncoding.EncodeToString(img.Bytes())
 }

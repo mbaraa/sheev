@@ -1,5 +1,6 @@
 package shapes
 
+// Polygon well it's a polygon big news :]
 type Polygon interface {
 	// GetNumSides returns number of sides the polygon has
 	GetNumSides() int
