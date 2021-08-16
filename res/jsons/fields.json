@@ -1,0 +1,249 @@
+[
+    {
+        "name": "اسم الطالب",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 960,
+            "Y": 435
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": false
+        }
+    },
+    {
+        "name": "الرقم الجامعي",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 447,
+            "Y": 435
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": true
+        }
+    },
+    {
+        "name": "المرشد الاكاديمي",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 904,
+            "Y": 492
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": false
+        }
+    },
+    {
+        "name": "التخصص",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 971,
+            "Y": 547
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl":true
+        }
+    },
+    {
+        "name": "تاريخ الفعالية",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 940,
+            "Y": 600
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl":true
+        }
+    },
+    {
+        "name": "الفصل الدراسي",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 435,
+            "Y": 600
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl":true
+        }
+    },
+    {
+        "name": "هدف الفعالية",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 940,
+            "Y": 655
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": false
+        }
+    },
+    {
+        "name": "الفئة المستهدفة من هذا النشاط",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 803,
+            "Y": 1034
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": false
+        }
+    },
+    {
+        "name": "عنوان الفعالية",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 946,
+            "Y": 1089
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": true
+        }
+    },
+    {
+        "name": "عدد النقاط",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 0,
+        "position": {
+            "X": 972,
+            "Y": 1143
+        },
+        "content": {
+            "text": "",
+            "text_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 255
+            },
+            "font_size": 20.5,
+            "font_name": "Default",
+            "is_rtl": true
+        }
+    },
+    {
+        "name": "نشاط الطالب في الفعالية",
+        "form_name": "نشاط خدمة المجتمع",
+        "field_type": 1,
+        "position": {
+            "X": 999,
+            "Y": 795
+        },
+        "content": {
+            "shape_vertices": [
+                {
+                    "X": 999,
+                    "Y": 795
+                },
+                {
+                    "X": 1138,
+                    "Y": 842
+                }
+            ],
+            "shape_color": {
+                "R": 66,
+                "G": 133,
+                "B": 244,
+                "A": 128
+            },
+            "selections": {
+                "مشارك": 1,
+                "متسابق": 2,
+                "منظم": 3,
+                "متطوع": 4
+            },
+            "selection": "",
+            "orientation": 0,
+            "scale": 1,
+            "rotation": 0
+        }
+    }
+]
