@@ -75,15 +75,14 @@ func (s *SelectionFieldPlacer) GetPosition() *shapes.Point2 {
 func (s *SelectionFieldPlacer) PlaceField() error {
 	s.fixPositions()
 	s.drawer.DrawFill()
-
 	return nil
 }
 
 func (s *SelectionFieldPlacer) fixPositions() {
-	newVertices := make([]shapes.Point2, s.drawer.GetPolygon().GetNumSides())
-	s.drawer.GetPolygon().SetVertices(s.originalVertices)
-
 	if s.selections[s.selection] > 1 {
+		newVertices := make([]shapes.Point2, s.drawer.GetPolygon().GetNumSides())
+		s.drawer.GetPolygon().SetVertices(s.originalVertices)
+
 		for index, vertex := range s.drawer.GetPolygon().GetVertices() {
 			newVertices[index] = vertex
 
@@ -94,9 +93,9 @@ func (s *SelectionFieldPlacer) fixPositions() {
 				newVertices[index].X += float64(s.selections[s.selection]-1) * (s.bounds.GetMax().X - s.bounds.GetMin().X)
 			}
 		}
+		s.drawer.GetPolygon().SetVertices(newVertices)
 	}
 
-	s.drawer.GetPolygon().SetVertices(newVertices)
 }
 
 // GetContent returns the content of the current field

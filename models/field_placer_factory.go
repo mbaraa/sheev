@@ -18,10 +18,10 @@ import (
 */
 
 // CreateFieldPlacer returns a proper field placer according to the given field
-func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) formgen.FieldPlacer {
+func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) (fp formgen.FieldPlacer) {
 	switch field.FieldType {
 	case TextField:
-		return formgen.NewTextFieldPlacer(
+		fp = formgen.NewTextFieldPlacer(
 			utils.NewText(
 				field.Content["text"].(string),
 				color.RGBA64{
@@ -38,7 +38,7 @@ func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) formgen.Fie
 		)
 
 	case SelectionField:
-		return formgen.NewSelectionFieldPlacer(
+		fp = formgen.NewSelectionFieldPlacer(
 			utils.NewPolygonDrawer(
 				utils.NewRectangleGenerator(shapes.NewBounds(
 					&shapes.Point2{
@@ -57,16 +57,20 @@ func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) formgen.Fie
 					B: uint16(field.Content["shape_color"].(map[string]interface{})["B"].(float64)),
 					A: uint16(field.Content["shape_color"].(map[string]interface{})["A"].(float64)),
 				},
-				utils.NewDrawingOptions(field.Content["scale"].(float64), field.Content["rotation"].(float64),
-					*field.Position),
+				utils.NewDrawingOptions(
+					field.Content["scale"].(float64),
+					field.Content["rotation"].(float64),
+					shapes.Point2{},
+				),
 				parentImage.GetSurface(),
 			),
 			fixSelectionsTypes(field.Content["selections"].(map[string]interface{})),
 			formgen.Orientation(field.Content["orientation"].(float64)),
 		)
+		fp.SetPartOfContent("selection", field.Content["selection"].(string))
 	}
 
-	return nil
+	return
 }
 
 func fixSelectionsTypes(m map[string]interface{}) (m2 map[string]int) {

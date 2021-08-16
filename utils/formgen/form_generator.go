@@ -1,8 +1,6 @@
 package formgen
 
 import (
-	"fmt"
-
 	"github.com/mbaraa/ligma/errors"
 )
 
@@ -53,7 +51,6 @@ func (f *FormGenerator) placeFields() error {
 			return err
 		}
 	}
-	fmt.Println("foook", f.fields["اسم الطالب"].GetContent())
 	return nil
 }
 
