@@ -1,10 +1,12 @@
 package data
 
-import "github.com/mbaraa/ligma/models"
+import (
+	"github.com/mbaraa/ligma/models"
+)
 
 type FormsGetterRepo interface {
-	// ExistsByName reports whether the Form exists or not, and an occurring error
-	ExistsByName(string) (bool, error)
+	// ExistsByName reports whether the FormGenerator exists or not, and an occurring error
+	ExistsByName(string) bool
 
 	// Get returns a form depending on its name, and an occurring error
 	Get(string) (*models.Form, error)
