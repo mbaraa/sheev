@@ -15,7 +15,7 @@ import (
 type FormImage struct {
 	srcImage     image.Image
 	workingImage *cairo.Surface
-	bounds       *shapes.Bounds
+	bounds       shapes.Bounds
 }
 
 // NewFormImage returns a new FormImage instance
@@ -24,14 +24,14 @@ func NewFormImage(img image.Image) (i *FormImage) {
 		srcImage:     img,
 		workingImage: cairo.NewSurfaceFromImage(img),
 		bounds: shapes.NewBounds(
-			&shapes.Point2{},
-			&shapes.Point2{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
+			shapes.Point2{},
+			shapes.Point2{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
 		),
 	}
 }
 
 // GetBounds returns the image's bounds
-func (i *FormImage) GetBounds() *shapes.Bounds {
+func (i *FormImage) GetBounds() shapes.Bounds {
 	return i.bounds
 }
 

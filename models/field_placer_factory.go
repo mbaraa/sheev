@@ -18,7 +18,7 @@ import (
 */
 
 // CreateFieldPlacer returns a proper field placer according to the given field
-func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) (fp formgen.FieldPlacer) {
+func CreateFieldPlacer(field Field, parentImage *formgen.FormImage) (fp formgen.FieldPlacer) {
 	switch field.FieldType {
 	case TextField:
 		fp = formgen.NewTextFieldPlacer(
@@ -41,11 +41,11 @@ func CreateFieldPlacer(field *Field, parentImage *formgen.FormImage) (fp formgen
 		fp = formgen.NewSelectionFieldPlacer(
 			utils.NewPolygonDrawer(
 				utils.NewRectangleGenerator(shapes.NewBounds(
-					&shapes.Point2{
+					shapes.Point2{
 						X: field.Content["shape_vertices"].([]interface{})[0].(map[string]interface{})["X"].(float64),
 						Y: field.Content["shape_vertices"].([]interface{})[0].(map[string]interface{})["Y"].(float64),
 					},
-					&shapes.Point2{
+					shapes.Point2{
 						X: field.Content["shape_vertices"].([]interface{})[1].(map[string]interface{})["X"].(float64),
 						Y: field.Content["shape_vertices"].([]interface{})[1].(map[string]interface{})["Y"].(float64),
 					},

@@ -13,16 +13,16 @@ import (
 // TextFieldPlacer represents a text to be placed in a form
 type TextFieldPlacer struct {
 	parent   *FormImage
-	bounds   *shapes.Bounds
-	position *shapes.Point2
-	text     *logogen.Text
+	bounds   shapes.Bounds
+	position shapes.Point2
+	text     logogen.Text
 	fontName string
 	isRTL    bool
 }
 
 // NewTextFieldPlacer returns a new TextFieldPlacer instance
 // the isRTL optional flag is used to indicate whether a non RTL text is placed in an RTL context
-func NewTextFieldPlacer(text *logogen.Text, position *shapes.Point2, parent *FormImage, isRTL ...bool) *TextFieldPlacer {
+func NewTextFieldPlacer(text logogen.Text, position shapes.Point2, parent *FormImage, isRTL ...bool) *TextFieldPlacer {
 	var isRTL2 bool
 	if isRTL != nil {
 		isRTL2 = isRTL[0]
@@ -33,20 +33,20 @@ func NewTextFieldPlacer(text *logogen.Text, position *shapes.Point2, parent *For
 		position: position,
 		parent:   parent,
 		bounds: shapes.NewBounds(
-			&shapes.Point2{},
-			&shapes.Point2{X: text.GetXLength(), Y: text.GetFontSize() / 2},
+			shapes.Point2{},
+			shapes.Point2{X: text.GetXLength(), Y: text.GetFontSize() / 2},
 		),
 		isRTL: isRTL2,
 	}
 }
 
 // GetBounds returns text field's bounds
-func (f *TextFieldPlacer) GetBounds() *shapes.Bounds {
+func (f *TextFieldPlacer) GetBounds() shapes.Bounds {
 	return f.bounds
 }
 
 // GetPosition returns text field's position
-func (f *TextFieldPlacer) GetPosition() *shapes.Point2 {
+func (f *TextFieldPlacer) GetPosition() shapes.Point2 {
 	return f.position
 }
 
@@ -64,8 +64,7 @@ func (f *TextFieldPlacer) PlaceField() error {
 func (f *TextFieldPlacer) drawText() {
 	if f.isArabic() {
 		f.makeArabic()
-	}
-	if f.isRTL {
+	} else if f.isRTL { // I'll fix the mixed text sometime, but for now it is what it is :\
 		f.makeRTL()
 	}
 
@@ -129,8 +128,8 @@ func (f *TextFieldPlacer) GetContent() interface{} {
 func (f *TextFieldPlacer) SetContent(txt interface{}) {
 	f.text.SetContent(txt.(string))
 	f.bounds = shapes.NewBounds(
-		&shapes.Point2{},
-		&shapes.Point2{X: f.text.GetXLength(), Y: f.text.GetFontSize() / 2},
+		shapes.Point2{},
+		shapes.Point2{X: f.text.GetXLength(), Y: f.text.GetFontSize() / 2},
 	)
 }
 

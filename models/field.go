@@ -19,10 +19,10 @@ const (
 
 // Field represents a field in a form
 type Field struct {
-	Name      string         `json:"name"`
-	FormName  string         `json:"form_name"`
-	FieldType FieldType      `json:"field_type"`
-	Position  *shapes.Point2 `json:"position"`
+	Name      string        `json:"name"`
+	FormName  string        `json:"form_name"`
+	FieldType FieldType     `json:"field_type"`
+	Position  shapes.Point2 `json:"position"`
 
 	Content map[string]interface{} `json:"content"`
 }
@@ -39,7 +39,7 @@ type textFieldContent struct {
 }
 
 type selectionFieldContent struct {
-	ShapeVertices []*shapes.Point2    `json:"shape_vertices"`
+	ShapeVertices []shapes.Point2     `json:"shape_vertices"`
 	ShapeColor    color.Color         `json:"shape_color"`
 	Selections    map[string]int      `json:"selections"`
 	Selection     string              `json:"selection"`

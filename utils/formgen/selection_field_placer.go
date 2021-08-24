@@ -8,7 +8,7 @@ import (
 // SelectionFieldPlacer represents a selection(highlighter) field ho ho ho to be placed in a form
 type SelectionFieldPlacer struct {
 	drawer           *utils.PolygonDrawer
-	bounds           *shapes.Bounds
+	bounds           shapes.Bounds
 	originalVertices []shapes.Point2
 
 	selections  map[string]int
@@ -38,7 +38,7 @@ func NewSelectionFieldPlacer(polygonDrawer *utils.PolygonDrawer, selections map[
 
 // getMaxPolygonPoint returns the maximum x and y coordinates of the given polygon
 // it's weird, but it works :]
-func getMaxPolygonPoint(polygon shapes.Polygon) *shapes.Point2 {
+func getMaxPolygonPoint(polygon shapes.Polygon) shapes.Point2 {
 	xMax, yMax := polygon.GetVertices()[0].X, polygon.GetVertices()[0].Y
 	for _, v := range polygon.GetVertices() {
 		if v.X > xMax {
@@ -49,12 +49,12 @@ func getMaxPolygonPoint(polygon shapes.Polygon) *shapes.Point2 {
 		}
 	}
 
-	return &shapes.Point2{X: xMax, Y: yMax}
+	return shapes.Point2{X: xMax, Y: yMax}
 }
 
 func (s *SelectionFieldPlacer) initBounds() *SelectionFieldPlacer {
 	s.bounds = shapes.NewBounds(
-		&s.drawer.GetPolygon().GetVertices()[0],
+		s.drawer.GetPolygon().GetVertices()[0],
 		getMaxPolygonPoint(s.drawer.GetPolygon()),
 	)
 
@@ -62,13 +62,13 @@ func (s *SelectionFieldPlacer) initBounds() *SelectionFieldPlacer {
 }
 
 // GetBounds returns image field's bounds
-func (s *SelectionFieldPlacer) GetBounds() *shapes.Bounds {
+func (s *SelectionFieldPlacer) GetBounds() shapes.Bounds {
 	return s.bounds
 }
 
 // GetPosition returns image field's position
-func (s *SelectionFieldPlacer) GetPosition() *shapes.Point2 {
-	return nil
+func (s *SelectionFieldPlacer) GetPosition() shapes.Point2 {
+	return shapes.Point2{}
 }
 
 // PlaceField draws the selection box on its parent image, and returns an occurring error

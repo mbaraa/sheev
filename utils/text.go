@@ -10,11 +10,11 @@ import (
 
 // NewText returns a new logogen.Text instance w/o an error,
 // ie when a font error is encountered the Default font is used
-func NewText(content string, fgColor color.RGBA64, fontSize float64, fontName string) (txt *logogen.Text) {
+func NewText(content string, fgColor color.RGBA64, fontSize float64, fontName string) logogen.Text {
 	font, err := os.ReadFile(fmt.Sprintf("./res/fonts/%s.ttf", fontName))
 	if err != nil {
 		font, _ = os.ReadFile("./res/font/Default.ttf")
 	}
-	txt, _ = logogen.NewText(content, fgColor, fontSize, font)
-	return
+	txt0, _ := logogen.NewText(content, fgColor, fontSize, font)
+	return *txt0
 }

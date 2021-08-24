@@ -11,45 +11,19 @@ import (
 
 // JSONSource represent a JSON source for the stuff
 type JSONSource struct {
-	forms0  []*models.Form
-	fields0 []*models.Field
+	forms0  []models.Form
+	fields0 []models.Field
 
 	// maps, much speed wow!
-	forms map[string]*models.Form // formName -> form
-
-	// I have no idea why I did this one :\
-	fields map[string]map[string]*models.Field // parentFormName -> fieldName -> field
+	forms  map[string]models.Form    // formName -> form
+	fields map[string][]models.Field // formName -> fields
 }
 
 // NewJSONSource returns a new JSONSource instance
-// its complexity is O(fuck) but it's better than O(n) on each field/form fetch :]
 func NewJSONSource(jsonDir string) (j *JSONSource) {
-	j = new(JSONSource).
-		loadJSONFiles(jsonDir)
-
-	// malloc
-	j.forms = make(map[string]*models.Form)
-	j.fields = make(map[string]map[string]*models.Field)
-	var formFields []*models.Field
-
-	for _, form := range j.forms0 {
-		j.forms[form.Name] = form
-		// more malloc
-		formFields = make([]*models.Field, 0)
-		j.fields[form.Name] = make(map[string]*models.Field)
-
-		for _, field := range j.fields0 {
-			if field.FormName == form.Name { // add form's fields to its fields slice :]
-				formFields = append(formFields, field)
-			}
-			// I have no idea why I did this :\
-			j.fields[form.Name][field.Name] = field
-		}
-		// bla bla bla
-		j.forms[form.Name].Fields = formFields
-	}
-
-	return j
+	return new(JSONSource).
+		loadJSONFiles(jsonDir).
+		initDataMaps()
 }
 
 func (j *JSONSource) loadJSONFiles(jsonDir string) *JSONSource {
@@ -77,6 +51,29 @@ func (j *JSONSource) loadJSONFiles(jsonDir string) *JSONSource {
 	return j
 }
 
+func (j *JSONSource) initDataMaps() *JSONSource {
+	// malloc
+	j.forms = make(map[string]models.Form)
+	j.fields = make(map[string][]models.Field)
+
+	for _, field := range j.fields0 {
+		j.fields[field.FormName] = append(j.fields[field.FormName], field)
+	}
+
+	for formIndex, form := range j.forms0 {
+
+		j.forms[form.Name] = models.Form{
+			Name:       form.Name,
+			Fields:     j.fields[form.Name], // the whole new form struct is just for this little fucker 🙂
+			B64FormImg: form.B64FormImg,
+		}
+
+		j.forms0[formIndex].Fields = j.fields[form.Name]
+	}
+
+	return j
+}
+
 // ExistsByName reports whether the FormGenerator exists or not, and an occurring error
 func (j *JSONSource) ExistsByName(name string) bool {
 	_, formExists := j.forms[name]
@@ -84,15 +81,15 @@ func (j *JSONSource) ExistsByName(name string) bool {
 }
 
 // Get returns a form depending on its name, and an occurring error
-func (j *JSONSource) Get(name string) (*models.Form, error) {
+func (j *JSONSource) Get(name string) (models.Form, error) {
 	if form, formExists := j.forms[name]; formExists {
 		return form, nil
 	}
-	return nil, errors.ErrNoFormFound
+	return models.Form{}, errors.ErrNoFormFound
 }
 
 // GetAll returns all available forms, and an occurring error
-func (j *JSONSource) GetAll() ([]*models.Form, error) {
+func (j *JSONSource) GetAll() ([]models.Form, error) {
 	return j.forms0, nil
 }
 

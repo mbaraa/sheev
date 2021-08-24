@@ -1,11 +1,9 @@
 package controllers
 
 import (
-	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"image/png"
 	"net/http"
 	"strings"
 
@@ -67,7 +65,6 @@ func (fc *FormsController) ServeHTTP(res http.ResponseWriter, req *http.Request)
 // GET /forms/all
 func (fc *FormsController) handleGetForms(res http.ResponseWriter, req *http.Request) {
 	forms := fc.getForms()
-	fmt.Println(forms)
 
 	err := json.NewEncoder(res).Encode(map[string]interface{}{
 		"forms": forms,
@@ -85,6 +82,7 @@ func (fc *FormsController) handleGetForm(res http.ResponseWriter, req *http.Requ
 	form, err := fc.getForm(formName)
 
 	if err != nil {
+		res.WriteHeader(400)
 		_ = json.NewEncoder(res).Encode(map[string]interface{}{
 			"error": err.Error(),
 		})
@@ -112,19 +110,23 @@ func (fc *FormsController) handleGenerateForm(res http.ResponseWriter, req *http
 		return
 	}
 
-	img, err := fc.generateForm(form.Name, form.Fields)
+	img, err := fc.generateForm(form)
 	if err != nil {
 		res.WriteHeader(400)
 		return
 	}
 
-	json.NewEncoder(res).Encode(map[string]interface{}{
+	err = json.NewEncoder(res).Encode(map[string]interface{}{
 		"img": img,
 	})
+	if err != nil {
+		res.WriteHeader(500)
+		return
+	}
 }
 
 // getForms returns available forms from the given forms store
-func (fc *FormsController) getForms() []*models.Form {
+func (fc *FormsController) getForms() []models.Form {
 	forms, err := fc.formsStore.GetAll()
 	if err != nil {
 		return nil
@@ -134,31 +136,35 @@ func (fc *FormsController) getForms() []*models.Form {
 }
 
 // getForm returns a form of the given name from the given forms store
-func (fc *FormsController) getForm(name string) (*models.Form, error) {
+func (fc *FormsController) getForm(name string) (models.Form, error) {
 	return fc.formsStore.Get(name)
 }
 
 // generateForm generates a form with the given data
-func (fc *FormsController) generateForm(formName string, fields []*models.Field) (string, error) {
-	form0, err := fc.getForm(formName)
+func (fc *FormsController) generateForm(form *models.Form) (string, error) {
+	form1, err := fc.getForm(form.Name)
 	if err != nil {
 		return "", err
 	}
-	form := form0.CopyForm()
 
-	img0, _ := base64.StdEncoding.DecodeString(form.B64FormImg)
-	bb := bytes.NewReader(img0)
-	img1, _ := png.Decode(bb)
-	img := formgen.NewFormImage(img1)
+	formImage := formgen.NewFormImageFromB64Image(form1.B64FormImg)
 
-	fields1 := make(map[string]formgen.FieldPlacer, len(fields))
-	for i, f := range form.Fields {
-		form.Fields[i].Content = fields[i].Content // the fucking array is he same since the backend sent first to the front end :0
-		fields1[f.Name] = models.CreateFieldPlacer(f, img)
-	}
+	formGen := formgen.NewFormGenerator(
+		"", formImage,
+		getFieldPlacersFromFields(formImage, form.Fields),
+	)
 
-	formGen := formgen.NewFormGenerator("", img, fields1)
-	formImgB, err := formGen.MakeForm()
+	formImgB, _ := formGen.MakeForm()
 
 	return base64.StdEncoding.EncodeToString(formImgB), nil
+}
+
+func getFieldPlacersFromFields(parentImg *formgen.FormImage, fields []models.Field) map[string]formgen.FieldPlacer {
+	fields1 := make(map[string]formgen.FieldPlacer, len(fields))
+
+	for i, f := range fields {
+		fields1[f.Name] = models.CreateFieldPlacer(fields[i], parentImg)
+	}
+
+	return fields1
 }
