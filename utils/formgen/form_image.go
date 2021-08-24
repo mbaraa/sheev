@@ -30,6 +30,15 @@ func NewFormImage(img image.Image) (i *FormImage) {
 	}
 }
 
+// NewFormImageFromB64Image returns a new FormImage instance using a base64 image string
+func NewFormImageFromB64Image(b64 string) *FormImage {
+	img0, _ := base64.StdEncoding.DecodeString(b64)
+	bb := bytes.NewReader(img0)
+	img1, _ := png.Decode(bb)
+
+	return NewFormImage(img1)
+}
+
 // GetBounds returns the image's bounds
 func (i *FormImage) GetBounds() shapes.Bounds {
 	return i.bounds
