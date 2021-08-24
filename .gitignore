@@ -2,3 +2,6 @@
 .idea/
 *.iml
 go.sum
+
+res/jsons/*
+res/pics/*
