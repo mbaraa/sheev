@@ -1,18 +1,23 @@
 package formgen
 
 import (
+	"encoding/base64"
+	goerr "errors"
+
 	"github.com/mbaraa/ligma/errors"
+	"github.com/mbaraa/ligma/models"
 )
 
 // FormGenerator generates a form
 type FormGenerator struct {
-	name      string
-	fields    map[string]FieldPlacer
-	formImage *FormImage
+	name           string
+	fields         []models.Field
+	fieldsPlpacers map[string]FieldPlacer
+	formImage      *FormImage
 }
 
 // NewFormGenerator returns a new FormGenerator instance
-func NewFormGenerator(name string, formImg *FormImage, fields map[string]FieldPlacer) *FormGenerator {
+func NewFormGenerator(name string, formImg *FormImage, fields []models.Field) *FormGenerator {
 	return &FormGenerator{
 		name:      name,
 		formImage: formImg,
@@ -26,27 +31,37 @@ func (f *FormGenerator) GetName() string {
 }
 
 // GetFields returns fields, lol
-func (f *FormGenerator) GetFields() map[string]FieldPlacer {
+func (f *FormGenerator) GetFields() []models.Field {
 	return f.fields
 }
 
 // MakeForm generates the form with the given fields' data and returns an occurring error
-func (f *FormGenerator) MakeForm() ([]byte, error) {
-	err := f.placeFields()
+func (f *FormGenerator) MakeForm() (form models.Form, err error) {
+	f.createFieldPlacers()
+
+	err = f.placeFields()
 	if err != nil {
-		return nil, err
+		return
 	}
 
 	// finalize the form image :]
-	form, _ := f.formImage.GetSurface().WriteToPNGStream()
+	formImage, status := f.formImage.GetSurface().WriteToPNGStream()
+	if status != 0 {
+		err = goerr.New(status.String())
+		return
+	}
 	f.formImage.GetSurface().Finish()
 	//f.formImage.GetSurface().Destroy()
 
-	return form, nil
+	form = models.Form{
+		Name:       f.name,
+		B64FormImg: base64.StdEncoding.EncodeToString(formImage),
+	}
+	return
 }
 
 func (f *FormGenerator) placeFields() error {
-	for _, field := range f.fields {
+	for _, field := range f.fieldsPlpacers {
 		if err := field.PlaceField(); err != nil {
 			return err
 		}
@@ -54,15 +69,23 @@ func (f *FormGenerator) placeFields() error {
 	return nil
 }
 
+func (f *FormGenerator) createFieldPlacers() {
+	f.fieldsPlpacers = make(map[string]FieldPlacer, len(f.fields))
+
+	for _, field := range f.fields {
+		f.fieldsPlpacers[field.Name] = CreateFieldPlacer(field, f.formImage)
+	}
+}
+
 // AddField adds a field into the form
 func (f *FormGenerator) AddField(name string, field FieldPlacer) {
-	f.fields[name] = field
+	f.fieldsPlpacers[name] = field
 }
 
 // ModifyFieldContent modifies an *existing* field
 func (f *FormGenerator) ModifyFieldContent(name string, newContent interface{}) error {
-	if _, fieldExists := f.fields[name]; fieldExists {
-		f.fields[name].SetContent(newContent)
+	if _, fieldExists := f.fieldsPlpacers[name]; fieldExists {
+		f.fieldsPlpacers[name].SetContent(newContent)
 		return nil
 	}
 
@@ -71,7 +94,7 @@ func (f *FormGenerator) ModifyFieldContent(name string, newContent interface{}) 
 
 // RemoveField removes the first encountered field with the given name
 func (f *FormGenerator) RemoveField(name string) {
-	delete(f.fields, name)
+	delete(f.fieldsPlpacers, name)
 }
 
 func (f *FormGenerator) GetFormImage() *FormImage {

@@ -1,9 +1,6 @@
 package models
 
 import (
-	"image/color"
-
-	"github.com/mbaraa/ligma/utils/formgen"
 	"github.com/mbaraa/ligma/utils/shapes"
 )
 
@@ -30,6 +27,7 @@ type Field struct {
 // these fuckers are not used any where,
 // but they exist to remind me what content each field had 🙂
 
+/*
 type textFieldContent struct {
 	Text      string       `json:"text"`
 	TextColor color.RGBA64 `json:"text_color"`
@@ -48,3 +46,5 @@ type selectionFieldContent struct {
 	Scale    float64 `json:"scale"`
 	Rotation float64 `json:"rotation"`
 }
+
+*/

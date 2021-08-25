@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -113,6 +112,9 @@ func (fc *FormsController) handleGenerateForm(res http.ResponseWriter, req *http
 	img, err := fc.generateForm(form)
 	if err != nil {
 		res.WriteHeader(400)
+		_ = json.NewEncoder(res).Encode(map[string]interface{}{
+			"error": err.Error(),
+		})
 		return
 	}
 
@@ -150,21 +152,12 @@ func (fc *FormsController) generateForm(form *models.Form) (string, error) {
 	formImage := formgen.NewFormImageFromB64Image(form1.B64FormImg)
 
 	formGen := formgen.NewFormGenerator(
-		"", formImage,
-		getFieldPlacersFromFields(formImage, form.Fields),
+		form.Name,
+		formImage,
+		form.Fields,
 	)
 
-	formImgB, _ := formGen.MakeForm()
+	finalForm, err := formGen.MakeForm()
 
-	return base64.StdEncoding.EncodeToString(formImgB), nil
-}
-
-func getFieldPlacersFromFields(parentImg *formgen.FormImage, fields []models.Field) map[string]formgen.FieldPlacer {
-	fields1 := make(map[string]formgen.FieldPlacer, len(fields))
-
-	for i, f := range fields {
-		fields1[f.Name] = models.CreateFieldPlacer(fields[i], parentImg)
-	}
-
-	return fields1
+	return finalForm.B64FormImg, err
 }

@@ -1,10 +1,10 @@
-package models
+package formgen
 
 import (
 	"image/color"
 
+	"github.com/mbaraa/ligma/models"
 	"github.com/mbaraa/ligma/utils"
-	"github.com/mbaraa/ligma/utils/formgen"
 	"github.com/mbaraa/ligma/utils/shapes"
 )
 
@@ -18,10 +18,10 @@ import (
 */
 
 // CreateFieldPlacer returns a proper field placer according to the given field
-func CreateFieldPlacer(field Field, parentImage *formgen.FormImage) (fp formgen.FieldPlacer) {
+func CreateFieldPlacer(field models.Field, parentImage *FormImage) (fp FieldPlacer) {
 	switch field.FieldType {
-	case TextField:
-		fp = formgen.NewTextFieldPlacer(
+	case models.TextField:
+		fp = NewTextFieldPlacer(
 			utils.NewText(
 				field.Content["text"].(string),
 				color.RGBA64{
@@ -37,8 +37,8 @@ func CreateFieldPlacer(field Field, parentImage *formgen.FormImage) (fp formgen.
 			field.Content["is_rtl"].(bool),
 		)
 
-	case SelectionField:
-		fp = formgen.NewSelectionFieldPlacer(
+	case models.SelectionField:
+		fp = NewSelectionFieldPlacer(
 			utils.NewPolygonDrawer(
 				utils.NewRectangleGenerator(shapes.NewBounds(
 					shapes.Point2{
@@ -65,7 +65,7 @@ func CreateFieldPlacer(field Field, parentImage *formgen.FormImage) (fp formgen.
 				parentImage.GetSurface(),
 			),
 			fixSelectionsTypes(field.Content["selections"].(map[string]interface{})),
-			formgen.Orientation(field.Content["orientation"].(float64)),
+			Orientation(field.Content["orientation"].(float64)),
 		)
 		fp.SetPartOfContent("selection", field.Content["selection"].(string))
 	}
