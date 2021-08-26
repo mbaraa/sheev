@@ -34,6 +34,7 @@ type textFieldContent struct {
 	FontSize  float64      `json:"font_size"`
 	FontName  string       `json:"font_name"`
 	IsRTL     bool         `json:"is_rtl"`
+	XWidth    int          `json:"x_width"`
 }
 
 type selectionFieldContent struct {

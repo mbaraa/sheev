@@ -5,24 +5,24 @@ import (
 
 	"github.com/01walid/goarabic"
 	"github.com/mbaraa/dsc_logo_generator/logogen"
-	"github.com/mbaraa/ligma/errors"
 	"github.com/mbaraa/ligma/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 
 // TextFieldPlacer represents a text to be placed in a form
 type TextFieldPlacer struct {
-	parent   *FormImage
-	bounds   shapes.Bounds
-	position shapes.Point2
-	text     logogen.Text
-	fontName string
-	isRTL    bool
+	parent      *FormImage
+	bounds      shapes.Bounds
+	position    shapes.Point2
+	text        logogen.Text
+	fontName    string
+	fieldXWidth float64
+	isRTL       bool
 }
 
 // NewTextFieldPlacer returns a new TextFieldPlacer instance
 // the isRTL optional flag is used to indicate whether a non RTL text is placed in an RTL context
-func NewTextFieldPlacer(text logogen.Text, position shapes.Point2, parent *FormImage, isRTL ...bool) *TextFieldPlacer {
+func NewTextFieldPlacer(text logogen.Text, fieldXWidth float64, fontName string, position shapes.Point2, parent *FormImage, isRTL ...bool) *TextFieldPlacer {
 	var isRTL2 bool
 	if isRTL != nil {
 		isRTL2 = isRTL[0]
@@ -36,7 +36,9 @@ func NewTextFieldPlacer(text logogen.Text, position shapes.Point2, parent *FormI
 			shapes.Point2{},
 			shapes.Point2{X: text.GetXLength(), Y: text.GetFontSize() / 2},
 		),
-		isRTL: isRTL2,
+		fieldXWidth: fieldXWidth,
+		fontName:    fontName,
+		isRTL:       isRTL2,
 	}
 }
 
@@ -52,12 +54,17 @@ func (f *TextFieldPlacer) GetPosition() shapes.Point2 {
 
 // PlaceField draws the text on its parent image, and returns an occurring error
 func (f *TextFieldPlacer) PlaceField() error {
-	if !f.canPlaceField() {
-		return errors.ErrFieldOverflowsParent
-	}
+	f.resizeTextSize()
 	f.drawText()
 
 	return nil
+}
+
+// resizeText resets the text's size to fit its field
+func (f *TextFieldPlacer) resizeTextSize() {
+	_, fontSize := f.text.GetXLengthUsingParent(f.fieldXWidth, 1)
+	f.text.SetFontSize(fontSize)
+
 }
 
 // drawText draws the
