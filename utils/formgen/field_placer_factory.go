@@ -71,6 +71,31 @@ func CreateFieldPlacer(field models.Field, parentImage *FormImage) (fp FieldPlac
 			Orientation(field.Content["orientation"].(float64)),
 		)
 		fp.SetPartOfContent("selection", field.Content["selection"].(string))
+
+	case models.MultiLinedTextField:
+		fp = NewMultiLinedTextFieldPlacer(
+			int(field.Content["num_lines"].(float64)),
+			field.Content["h"].(float64),
+			// shut the fuck up I too have eyes and can see that this duplicated :)
+			NewTextFieldPlacer(
+				utils.NewText(
+					field.Content["text"].(string),
+					color.RGBA64{
+						R: uint16(field.Content["text_color"].(map[string]interface{})["R"].(float64)),
+						G: uint16(field.Content["text_color"].(map[string]interface{})["G"].(float64)),
+						B: uint16(field.Content["text_color"].(map[string]interface{})["B"].(float64)),
+						A: uint16(field.Content["text_color"].(map[string]interface{})["A"].(float64)),
+					},
+					field.Content["font_size"].(float64),
+					field.Content["font_name"].(string),
+				),
+				field.Content["x_width"].(float64),
+				field.Content["font_name"].(string),
+				field.Position,
+				parentImage,
+				field.Content["is_rtl"].(bool),
+			),
+		)
 	}
 
 	return

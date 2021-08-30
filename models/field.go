@@ -11,7 +11,7 @@ type FieldType uint
 const (
 	TextField FieldType = iota
 	SelectionField
-	ImageField
+	MultiLinedTextField
 )
 
 // Field represents a field in a form
@@ -35,6 +35,11 @@ type textFieldContent struct {
 	FontName  string       `json:"font_name"`
 	IsRTL     bool         `json:"is_rtl"`
 	XWidth    int          `json:"x_width"`
+}
+
+type multiLinedTextFieldContent struct {
+	textFieldContent
+	NumLines int `json:"num_lines"`
 }
 
 type selectionFieldContent struct {
