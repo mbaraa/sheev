@@ -1,4 +1,4 @@
-module github.com/mbaraa/ligma
+module github.com/mbaraa/sheev
 
 go 1.16
 

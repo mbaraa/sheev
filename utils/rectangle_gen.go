@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // RectangleGenerator generates a rectangle with the given start and end points

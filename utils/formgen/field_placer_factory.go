@@ -3,9 +3,9 @@ package formgen
 import (
 	"image/color"
 
-	"github.com/mbaraa/ligma/models"
-	"github.com/mbaraa/ligma/utils"
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/models"
+	"github.com/mbaraa/sheev/utils"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 /*

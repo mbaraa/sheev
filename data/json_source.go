@@ -5,8 +5,8 @@ import (
 	"os"
 	"path"
 
-	"github.com/mbaraa/ligma/errors"
-	"github.com/mbaraa/ligma/models"
+	"github.com/mbaraa/sheev/errors"
+	"github.com/mbaraa/sheev/models"
 )
 
 // JSONSource represent a JSON source for the stuff

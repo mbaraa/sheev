@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 	goerr "errors"
 
-	"github.com/mbaraa/ligma/errors"
-	"github.com/mbaraa/ligma/models"
+	"github.com/mbaraa/sheev/errors"
+	"github.com/mbaraa/sheev/models"
 )
 
 // FormGenerator generates a form

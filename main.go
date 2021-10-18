@@ -3,14 +3,16 @@ package main
 import (
 	"net/http"
 
-	"github.com/mbaraa/ligma/controllers"
-	"github.com/mbaraa/ligma/data"
+	"github.com/mbaraa/sheev/controllers"
+	"github.com/mbaraa/sheev/data"
 )
 
 func main() {
 	formsStore := data.NewJSONSource("./res/jsons/")
 	cont := controllers.NewFormsController(formsStore)
-	println("running at http://localhost:8080")
+	println("running at http://localhost:4200")
+
 	http.Handle("/forms/", cont)
-	http.ListenAndServe(":8080", nil)
+	http.Handle("/", http.FileServer(http.Dir("./client/")))
+	http.ListenAndServe(":4200", nil)
 }

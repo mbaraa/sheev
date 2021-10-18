@@ -1,8 +1,8 @@
 package formgen
 
 import (
-	"github.com/mbaraa/ligma/utils"
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // SelectionFieldPlacer represents a selection(highlighter) field ho ho ho to be placed in a form

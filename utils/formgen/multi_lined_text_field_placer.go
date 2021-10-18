@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // MultiLinedTextFieldPlacer represents a text to be placed in a form
@@ -66,13 +66,23 @@ func (f *MultiLinedTextFieldPlacer) partitionText() {
 	for line := 1; line < f.numLines; line++ {
 		fmt.Printf("len: %d\n", len(mutStr))
 
-		endOfLine := f.getEndOfLineIndex(len(mutStr), line)
+		field2TextRatio := f.textFieldPlacer.fieldXWidth / f.textFieldPlacer.text.GetXLength()
 
-		for mutStr[endOfLine] != ' ' && endOfLine > 0 { // in order to not split one word over two lines :)
-			endOfLine--
+		if field2TextRatio < 1. {
+			endOfLine := int(
+				float64(len(mutStr)) *
+					(float64(line) *
+						(field2TextRatio)))
+
+			for mutStr[endOfLine] != ' ' && endOfLine > 0 { // in order to not split one word over two lines :)
+				endOfLine--
+			}
+
+			mutStr[endOfLine] = '\n'
+		} else {
+			return
 		}
 
-		mutStr[endOfLine] = '\n'
 	}
 	f.textFieldPlacer.SetContent(string(mutStr))
 }

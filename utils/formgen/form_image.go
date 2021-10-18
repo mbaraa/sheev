@@ -6,8 +6,8 @@ import (
 	"image"
 	"image/png"
 
-	"github.com/mbaraa/ligma/errors"
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/errors"
+	"github.com/mbaraa/sheev/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 

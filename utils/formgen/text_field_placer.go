@@ -5,7 +5,7 @@ import (
 
 	"github.com/01walid/goarabic"
 	"github.com/mbaraa/dsc_logo_generator/logogen"
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 
@@ -118,12 +118,6 @@ func (f *TextFieldPlacer) isArabic() bool {
 	}
 
 	return false
-}
-
-// canPlaceField reports whether the text can be placed(w/o overflowing parent) or not
-func (f *TextFieldPlacer) canPlaceField() bool {
-	return f.bounds.GetMax().X <= f.parent.GetBounds().GetMax().X &&
-		f.bounds.GetMax().Y <= f.parent.GetBounds().GetMax().Y
 }
 
 // GetContent returns the inner text of the current text field

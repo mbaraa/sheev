@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/mbaraa/ligma/data"
-	"github.com/mbaraa/ligma/models"
-	"github.com/mbaraa/ligma/utils/formgen"
+	"github.com/mbaraa/sheev/data"
+	"github.com/mbaraa/sheev/models"
+	"github.com/mbaraa/sheev/utils/formgen"
 )
 
 // FormsController well it's the forms controller :]

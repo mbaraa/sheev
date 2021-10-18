@@ -3,7 +3,7 @@ package utils
 import (
 	"math"
 
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // PolygonGenerator generates the inner regular polygon of the given circumferting circle

@@ -1,6 +1,6 @@
 package formgen
 
-import "github.com/mbaraa/ligma/utils/shapes"
+import "github.com/mbaraa/sheev/utils/shapes"
 
 // FieldData represents the field's data, well duh a field has got to have some data :0
 type FieldData interface {

@@ -3,8 +3,8 @@ package formgen
 import (
 	"image"
 
-	"github.com/mbaraa/ligma/errors"
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/errors"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // ImageField represents an image to be placed in a form

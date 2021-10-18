@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/mbaraa/ligma/models"
+	"github.com/mbaraa/sheev/models"
 )
 
 type FormsGetterRepo interface {

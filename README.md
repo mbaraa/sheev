@@ -1,14 +1,13 @@
-# Ligma 
+# Sheev 
 
-**What's `Ligma` you might ask?**\
-Ligma foooorms 😂😂😂,\
-alright whatever 😇 this thing generates forms, much wow!
+**What's `Sheev` you might ask?**\
+This thing generates image forms, much wow!
 
 **Well you might ask... why the hell would anyone do this while PDF forms are all over the place?**\
 I use this for forms that are not PDF, and besides I didn't find a free suitable PDF forms library for Go so...
 
 
-[![GoDoc](https://godoc.org/github.com/mbaraa/ligma?status.png)](https://godoc.org/github.com/mbaraa/ligma) [![Go Report Card](https://goreportcard.com/badge/github.com/mbaraa/ligma)](https://goreportcard.com/report/github.com/mbaraa/ligma) ![GitHub](https://img.shields.io/github/license/mbaraa/ligma)
+[![GoDoc](https://godoc.org/github.com/mbaraa/sheev?status.png)](https://godoc.org/github.com/mbaraa/sheev) [![Go Report Card](https://goreportcard.com/badge/github.com/mbaraa/sheev)](https://goreportcard.com/report/github.com/mbaraa/sheev) ![GitHub](https://img.shields.io/github/license/mbaraa/sheev)
 
 ## dependencies:
 - **SOFTWARE**

@@ -3,7 +3,7 @@ package utils
 import (
 	"image/color"
 
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 	"github.com/ungerik/go-cairo"
 )
 

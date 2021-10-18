@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/mbaraa/ligma/utils/shapes"
+	"github.com/mbaraa/sheev/utils/shapes"
 )
 
 // FieldType defines the type of the field
@@ -20,6 +20,7 @@ type Field struct {
 	FormName  string        `json:"form_name"`
 	FieldType FieldType     `json:"field_type"`
 	Position  shapes.Point2 `json:"position"`
+	Savable   bool          `json:"savable"` // only used with
 
 	Content map[string]interface{} `json:"content"`
 }
