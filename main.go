@@ -13,6 +13,6 @@ func main() {
 	println("running at http://localhost:4200")
 
 	http.Handle("/forms/", cont)
-	http.Handle("/", http.FileServer(http.Dir("./client/")))
+	http.Handle("/", http.FileServer(http.Dir("./client/dist/")))
 	http.ListenAndServe(":4200", nil)
 }
