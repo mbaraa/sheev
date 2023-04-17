@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-export const backendAddress = "https://sheev.sheev.xyz"
+export const backendAddress = "";
 
-createApp(App)
-    .mount('#app');
+createApp(App).mount("#app");
